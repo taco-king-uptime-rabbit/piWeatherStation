@@ -25,8 +25,10 @@ timestamp = datetime.now()
 
 delay = 5
 
-# Set the temp for the color baseline
-base_temp = round(sense.get_temperature(), 1)
+# Set the temp for the color baseline, convert C to F
+starting_temp_C = round(sense.get_temperature(), 1)
+starting_temp_F = (starting_temp_C * 1.8) + 32
+
 
 def get_sense_data():
     sense_data = []
@@ -86,32 +88,32 @@ with open(DATA_FILE, 'w', buffering=1, newline='') as f:
 
         actual_temp = data[1]
 
-        if   actual_temp >= (base_temp + 3):
+        if   actual_temp >= (starting_temp_F + 3):
             RGB = [ 255, 0  ,   0 ]
-        elif actual_temp >= (base_temp + 2):
+        elif actual_temp >= (starting_temp_F + 2):
             RGB = [ 255, 128,   0 ]
-        elif actual_temp >= (base_temp + 1):
+        elif actual_temp >= (starting_temp_F + 1):
             RGB = [ 255, 255,   0 ]
-        elif actual_temp >= (base_temp + 0): # <==== Start
+        elif actual_temp >= (starting_temp_F + 0): # <==== Start
             RGB = [ 255, 255, 255 ]
-        elif actual_temp >= (base_temp - 1):
+        elif actual_temp >= (starting_temp_F - 1):
             RGB = [ 128, 255,   0 ]
-        elif actual_temp >= (base_temp - 2):
+        elif actual_temp >= (starting_temp_F - 2):
             RGB = [ 0,   255,   0 ]
-        elif actual_temp >= (base_temp - 3):
+        elif actual_temp >= (starting_temp_F - 3):
             RGB = [ 0,   255, 128 ]
-        elif actual_temp >= (base_temp - 4):
+        elif actual_temp >= (starting_temp_F - 4):
             RGB = [ 0,   255, 255 ]
-        elif actual_temp >= (base_temp - 5):
+        elif actual_temp >= (starting_temp_F - 5):
             RGB = [ 0,   0,   255 ]
-        elif actual_temp >= (base_temp - 6):
+        elif actual_temp >= (starting_temp_F - 6):
             RGB = [ 0,   0,   150 ]
-        elif actual_temp >= (base_temp - 7):
+        elif actual_temp >= (starting_temp_F - 7):
             RGB = [ 0,   0,   100 ]
         else:
             RGB = [ 255, 0,   255 ]
 
-        print(base_temp,actual_temp)
+        print(starting_temp_F,actual_temp)
 
         data[0]  = round(data[0], 5)
         data[1]  = round(data[1], 5)
