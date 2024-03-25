@@ -11,10 +11,14 @@ from sense_hat import SenseHat
 from datetime import datetime
 from csv import writer
 import time
+import os
 
 # Set the temp for the color baseline
 base_temp = 85
 DATA_DIR="/home/pi/Projects/piWeatherStation/output"
+
+if not os.path.exists(DATA_DIR):
+   os.makedirs(DATA_DIR)
 
 sense = SenseHat()
 sense.clear()
@@ -68,7 +72,7 @@ def get_sense_data():
     return sense_data
 
 timestr = time.strftime("%Y%m%d-%H%M%S")
-DATA_FILE = DATA_DIR + 'data-' + timestr + '.csv'
+DATA_FILE = DATA_DIR + '/' + 'data-' + timestr + '.csv'
 
 with open(DATA_FILE, 'w', buffering=1, newline='') as f:
     data_writer = writer(f)
