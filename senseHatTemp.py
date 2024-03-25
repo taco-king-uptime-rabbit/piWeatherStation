@@ -14,6 +14,7 @@ import time
 
 # Set the temp for the color baseline
 base_temp = 85
+DATA_DIR="/home/pi/Projects/piWeatherStation/"
 
 sense = SenseHat()
 sense.clear()
@@ -67,8 +68,9 @@ def get_sense_data():
     return sense_data
 
 timestr = time.strftime("%Y%m%d-%H%M%S")
+DATA_FILE = DATA_DIR + 'data-' + timestr + '.csv'
 
-with open('data-' + timestr + '.csv', 'w', buffering=1, newline='') as f:
+with open(DATA_FILE, 'w', buffering=1, newline='') as f:
     data_writer = writer(f)
     data_writer.writerow(['temp_C', 'temp_F', 'pres', 'hum', 'datetime' ])
 
