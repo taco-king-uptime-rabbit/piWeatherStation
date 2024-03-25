@@ -13,8 +13,6 @@ from csv import writer
 import time
 import os
 
-# Set the temp for the color baseline
-base_temp = 85
 DATA_DIR="/home/pi/Projects/piWeatherStation/output"
 
 if not os.path.exists(DATA_DIR):
@@ -26,6 +24,9 @@ sense.clear()
 timestamp = datetime.now()
 
 delay = 5
+
+# Set the temp for the color baseline
+base_temp = round(sense.get_temperature(), 1)
 
 def get_sense_data():
     sense_data = []
