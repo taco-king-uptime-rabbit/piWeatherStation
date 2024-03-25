@@ -14,7 +14,7 @@ import time
 
 # Set the temp for the color baseline
 base_temp = 85
-DATA_DIR="/home/pi/Projects/piWeatherStation/"
+DATA_DIR="/home/pi/Projects/piWeatherStation/output"
 
 sense = SenseHat()
 sense.clear()
