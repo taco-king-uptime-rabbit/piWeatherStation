@@ -24,7 +24,7 @@ sense.clear()
 timestamp = datetime.now()
 
 # how long between reads
-delay = 0
+delay = 1 
 
 # set color/light sensor 
 #sense.color.gain = 1 
@@ -127,6 +127,7 @@ with open(DATA_FILE, 'w', buffering=1, newline='') as f:
         data[4]  = round(data[4], 5)
 
         sense.show_message(led_temp_F, text_colour=RGB, scroll_speed=0.08)
+        sense.show_message(str(data[8]), text_colour=[ 255, 255, 255 ], scroll_speed=0.08)
         data.append(RGB)
         print(data)
         data_writer.writerow(data)
