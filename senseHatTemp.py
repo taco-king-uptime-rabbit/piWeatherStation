@@ -85,7 +85,7 @@ DATA_FILE = DATA_DIR + '/' + 'data-' + timestr + '.csv'
 
 with open(DATA_FILE, 'w', buffering=1, newline='') as f:
     data_writer = writer(f)
-    data_writer.writerow(['starting_temp_F', 'temp_C', 'temp_F', 'pres', 'hum', 'Red', 'Green', 'Blue', 'Clear', 'datetime' ])
+    data_writer.writerow(['starting_temp_F', 'temp_C', 'temp_F', 'pres', 'hum', 'Red', 'Green', 'Blue', 'Clear', 'datetime', 'RGB' ])
 
     while True:
         data = get_sense_data()
