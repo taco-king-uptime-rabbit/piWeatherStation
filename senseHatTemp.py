@@ -119,7 +119,7 @@ with open(DATA_FILE, 'w', buffering=1, newline='') as f:
         else:
             RGB = [ 255, 0,   255 ]
 
-        print(starting_temp_F,actual_temp)
+        #print(starting_temp_F,actual_temp)
 
         data[1]  = round(data[1], 5)
         data[2]  = round(data[2], 5)
