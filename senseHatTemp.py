@@ -23,7 +23,12 @@ sense.clear()
 
 timestamp = datetime.now()
 
-delay = 5
+# how long between reads
+delay = 0
+
+# set color/light sensor 
+#sense.color.gain = 1 
+#sense.color.integration_cycles = 64
 
 # Set the temp for the color baseline, convert C to F
 starting_temp_C = round(sense.get_temperature(), 1)
@@ -33,18 +38,19 @@ starting_temp_F = (starting_temp_C * 1.8) + 32
 def get_sense_data():
     sense_data = []
     # Get environmental data
+    sense_data.append(starting_temp_F)
     sense_data.append(sense.get_temperature())
-    sense_data.append((sense_data[0] * 1.8) + 32)
+    sense_data.append((sense_data[1] * 1.8) + 32)
     sense_data.append(sense.get_pressure())
     sense_data.append(sense.get_humidity())
 
-#    # Get colour sensor data (version 2 Sense HAT only)
-#    red, green, blue, clear = sense.colour.colour
-#    sense_data.append(red)
-#    sense_data.append(green)
-#    sense_data.append(blue)
-#    sense_data.append(clear)
-#
+    # Get colour sensor data (version 2 Sense HAT only)
+    red, green, blue, clear = sense.colour.colour
+    sense_data.append(red)
+    sense_data.append(green)
+    sense_data.append(blue)
+    sense_data.append(clear)
+
 #    # Get orientation data
 #    orientation = sense.get_orientation()
 #    sense_data.append(orientation["yaw"])
@@ -79,14 +85,14 @@ DATA_FILE = DATA_DIR + '/' + 'data-' + timestr + '.csv'
 
 with open(DATA_FILE, 'w', buffering=1, newline='') as f:
     data_writer = writer(f)
-    data_writer.writerow(['temp_C', 'temp_F', 'pres', 'hum', 'datetime' ])
+    data_writer.writerow(['starting_temp_F', 'temp_C', 'temp_F', 'pres', 'hum', 'Red', 'Green', 'Blue', 'Clear', 'datetime' ])
 
     while True:
         data = get_sense_data()
-        led_temp_F = data[1]
+        led_temp_F = data[2]
         led_temp_F = str(round(led_temp_F, 1))
 
-        actual_temp = data[1]
+        actual_temp = data[2]
 
         if   actual_temp >= (starting_temp_F + 3):
             RGB = [ 255, 0  ,   0 ]
@@ -115,16 +121,16 @@ with open(DATA_FILE, 'w', buffering=1, newline='') as f:
 
         print(starting_temp_F,actual_temp)
 
-        data[0]  = round(data[0], 5)
         data[1]  = round(data[1], 5)
         data[2]  = round(data[2], 5)
         data[3]  = round(data[3], 5)
+        data[4]  = round(data[4], 5)
 
-        sense.show_message(led_temp_F, text_colour=RGB, scroll_speed=0.1)
+        sense.show_message(led_temp_F, text_colour=RGB, scroll_speed=0.08)
         data.append(RGB)
         print(data)
         data_writer.writerow(data)
-        time.sleep(5)
+        time.sleep(delay)
 
 #    while True:
 #        data = get_sense_data()
